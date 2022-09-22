@@ -1,0 +1,35 @@
+<div class="container col-md-16" >
+    <div class="row">
+        <input type="button" class="form-control btn btn-primary ml-auto" (click)="createCustomer()" value="Create User" style="max-width: 150px;">
+    </div>
+    <div class = "table-responsive">
+        <table class = "table" *ngIf = 'profileList.length > 0'>
+            <thead class="table-dark">
+                <tr>
+                    <th>ProfileId</th>
+                    <th>UserName</th>
+                    <th>FirstName</th>
+                    <th>LastName</th>
+                    <th>Dob</th>
+                    <th>IdType</th>
+                    <th>IdValue</th>
+                    <th>Edit</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor = "let profile of profileList">
+                    <td>{{profile.profileId}}</td>
+                    <td>{{profile.userName}}</td>
+                    <td>{{profile.firstName}}</td>
+                    <td>{{profile.lastName}}</td>
+                    <td>{{profile.dob | date:'dd-MM-yyyy'}}</td>
+                    <td>{{profile.idType}}</td>
+                    <td>{{profile.idValue}}</td>
+                    <td style="text-align: center;">
+                        <a (click)="editIconClick(profile)"><i class="fa-solid fa-edit"></i></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

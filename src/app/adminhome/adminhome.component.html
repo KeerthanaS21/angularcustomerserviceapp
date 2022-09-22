@@ -1,0 +1,66 @@
+<div class="container col-md-16" *ngIf="!isAssignClicked && !isCommentClicked">
+    <div class="row">
+        <label for="Status">Filter by Status</label>
+        <input type="text" [(ngModel)] = "status" ngDefaultControl  (ngModelChange)="getRequestsByFilter()" placeholder="Type status to filter">
+        <input type="button" class="form-control btn btn-primary ml-auto" (click)="addEditCustomer()" value="Add/Edit Customer" style="max-width: 150px;">
+    </div>
+    <div class = "table-responsive">
+        <table class = "table" *ngIf = 'requestList.length > 0'>
+            <thead class="table-dark">
+                <tr>
+                    <th>RequestId</th>
+                    <th>RequestType</th>
+                    <th>RequestDetails</th>
+                    <th>Status</th>
+                    <th>CreatedBy</th>
+                    <th>AssignedTo</th>
+                    <th>AssigneeComments</th>
+                    <th>CreatedDate</th>
+                    <th>ClosedDate</th>
+                    <th>Assign</th>
+                    <th>Comments/Close</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor = "let request of requestList">
+                    <td>{{request.requestId}}</td>
+                    <td>{{request.requestType}}</td>
+                    <td>{{request.requestDetail}}</td>
+                    <td>{{request.requestStatus}}</td>
+                    <td>{{request.requestCreatedBy}}</td>
+                    <td>{{request.requestAssignedTo}}</td>
+                    <td>{{request.requestAssigneeComments}}</td>
+                    <td>{{request.requestCreatedDate | date:'dd-MM-yyyy'}}</td>
+                    <td>{{request.requestClosedDate  | date:'dd-MM-yyyy'}}</td>
+                    <td style="text-align: center;">
+                        <a (click)="assign(request)"><i class="fa-solid fa-user"></i></a>
+                    </td>
+                    <td style="text-align: center;">
+                        <a (click)="addComment(request)"><i class="fa-solid fa-plus"></i></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="card card-container mycontainer" *ngIf="isAssignClicked || isCommentClicked" style="max-width: 400px;">
+    <div class="form-group" *ngIf="isAssignClicked" style="text-align: center">
+        <label for="assignTo" style="text-align: center;">Assign To</label>
+        <input type="text" [(ngModel)]="requestDetails.requestAssignedTo" placeholder="Assign" /> <br><br>
+        <input type="button" class="form-control btn btn-primary " (click)="onSubmitAssign()" value="Submit" style="max-width: 150px;">
+    </div>
+    <div class="alert alert-success" *ngIf="isAssignClicked && isSuccessful">
+        Request assigned successfully
+    </div>
+    <div class="form-group" *ngIf="isCommentClicked">
+        <label for="addComment" >Add Comment</label>
+        <input type="text" [(ngModel)]="requestDetails.requestAssigneeComments" placeholder="Add Comment" /><br><br>
+        <label for="status" >Change Status</label>
+        <input type="text" [(ngModel)]="requestDetails.requestStatus" placeholder="update status" /><br><br>
+        <input type="button" class="form-control btn btn-primary " (click)="onSubmitComment()" value="Submit" style="max-width: 150px;">
+    </div>
+    <div class="alert alert-success" *ngIf="isCommentClicked && isSuccessful">
+        Comment added successfully
+    </div>
+</div>

@@ -1,0 +1,23 @@
+.container{
+    padding:3em;
+    max-width: 0 auto;
+    margin: auto;
+}
+
+.mycontainer{
+    padding:3em;
+    max-width: 700px;
+    margin: auto;
+}
+
+h1{
+    text-align: center;
+}
+label {
+    display: inline-block;
+    width: 250px;
+    text-align: left;
+}
+div{
+    margin-bottom: 10px;
+}

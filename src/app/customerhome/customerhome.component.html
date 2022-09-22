@@ -1,0 +1,66 @@
+<div class="container" *ngIf="!isCreateClicked">
+    <div class="row">
+        <label for="Status">Filter by Status</label>
+        <input type="text" [(ngModel)] = "status" ngDefaultControl  (ngModelChange)="getRequestsByFilter()" placeholder="Type status to filter">
+        <button class="btn btn-primary ml-auto" (click)="onCreateRequestClick()">Create Request</button>
+    </div>
+    <div class = "table-responsive">
+        <table class = "table" *ngIf = 'requestList.length > 0'>
+            <thead class="table-dark">
+                <tr>
+                    <th>Request Id</th>
+                    <th>Request Type</th>
+                    <th>Request Details</th>
+                    <th>Status</th>
+                    <th>Assigned To</th>
+                    <th>Assignee Comments</th>
+                    <th>Created Date</th>
+                    <th>Closed Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor = "let request of requestList">
+                    <td>{{request.requestId}}</td>
+                    <td>{{request.requestType}}</td>
+                    <td>{{request.requestDetail}}</td>
+                    <td>{{request.requestStatus}}</td>
+                    <td>{{request.requestAssignedTo}}</td>
+                    <td>{{request.requestAssigneeComments}}</td>
+                    <td>{{request.requestCreatedDate | date:'dd-MM-yyyy'}}</td>
+                    <td>{{request.requestClosedDate | date:'dd-MM-yyyy'}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="card card-container mycontainer" *ngIf="isCreateClicked">
+    <div><h2>Create Request</h2></div>
+    <form *ngIf="!isSuccessful" name="form" (ngSubmit)="f.form.valid && onSubmitRequest()" #f="ngForm" novalidate>
+        <div class="form-group">
+            <label for="reqType">Request Type</label>
+            <input type="text"  class="form-control" name="reqType" [(ngModel)]="requestDetails.requestType" required
+            #reqType="ngModel"  />   
+            <div class="alert-danger" *ngIf="f.submitted && reqType.invalid">
+            <div *ngIf="reqType.errors?.['required']">reqType is required</div>
+            </div>       
+        </div>
+        <div class="form-group">
+            <label for="reqDet">Request Detail</label>
+            <input type="text"  class="form-control" name="reqDet" [(ngModel)]="requestDetails.requestDetail" required
+            #reqDet="ngModel"  />   
+            <div class="alert-danger" *ngIf="f.submitted && reqDet.invalid">
+            <div *ngIf="reqDet.errors?.['required']">Request Detail is required</div>
+            </div>       
+        </div>
+        <div class="form-group">
+            <input type="submit" class="form-control btn btn-primary btn-block" value="Submit">
+        </div>
+        <div class="alert alert-warning" *ngIf="f.submitted && isrequestSubmitFailed">
+            Service Request submission failed!<br />{{ errorMessage }}
+        </div>
+    </form>
+    <div class="alert alert-success" *ngIf="isSuccessful">
+        Request created successfully!
+    </div>
+</div>

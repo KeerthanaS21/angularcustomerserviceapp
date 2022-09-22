@@ -1,0 +1,62 @@
+<div class="card card-container mycontainer">
+    <div><h2>Update Profile</h2></div>
+    <form *ngIf="!isSuccessful" name="form" (ngSubmit)="f.form.valid && onSubmitProfile()" #f="ngForm" novalidate>
+        <div class="form-group">
+            <label for="userName">User Name</label>
+            <input type="text" class="form-control" name="userName" [(ngModel)]="user" 
+            #bookid="ngModel" disabled *ngIf="!isAdmin" />    
+            <input type="text" class="form-control" name="userName" [(ngModel)]="updateProfile.userName" 
+            #bookid="ngModel" disabled *ngIf="isAdmin && updateProfile.userName != '' " />     
+            <input type="text" class="form-control" name="userName" [(ngModel)]="user" 
+            #bookid="ngModel" disabled *ngIf="isAdmin && updateProfile.userName == '' " />         
+        </div>
+        <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input type="text"  class="form-control" name="firstName" [(ngModel)]="updateProfile.firstName" required
+            #firstName="ngModel"  />
+            <div class="alert-danger" *ngIf="f.submitted && firstName.invalid">
+            <div *ngIf="firstName.errors?.['required']">FirstName is required</div>
+            </div>       
+        </div>
+        <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input type="text"  class="form-control" name="lastName" [(ngModel)]="updateProfile.lastName" required
+            #lastName="ngModel"  />     
+            <div class="alert-danger" *ngIf="f.submitted && lastName.invalid">
+            <div *ngIf="lastName.errors?.['required']">LastName is required</div>
+            </div>       
+        </div>
+        <div class="form-group">
+            <label for="dob">Date of Birth</label>
+            <input type="date"  class="form-control" name="dob" [(ngModel)]="updateProfile.dob" 
+            #dob="ngModel"  required pattern="\d{4}-\d{2}-\d{2}" />   
+            <div class="alert-danger" *ngIf="f.submitted && dob.invalid">
+            <div *ngIf="dob.errors?.['required']">Date of Birth is required</div>
+            </div>       
+        </div>
+        <div class="form-group">
+            <label for="idType">Id Type</label>
+            <select class="form-control" name="idType" [(ngModel)]="updateProfile.idType" required>
+            <option value="pan" >PAN</option>
+            <option value="aadhar">Aadhar</option>
+            </select>            
+        </div>
+        <div class="form-group">
+            <label for="idValue">Id Value</label>
+            <input type="text"  class="form-control" name="idValue" [(ngModel)]="updateProfile.idValue" required
+            #idValue="ngModel"  />   
+            <div class="alert-danger" *ngIf="f.submitted && idValue.invalid">
+            <div *ngIf="idValue.errors?.['required']">Id number is required</div>
+            </div>       
+        </div>
+        <div class="form-group">
+            <input type="submit" class="form-control btn btn-primary btn-block" value="Submit">
+        </div>
+        <div class="alert alert-warning" *ngIf="f.submitted && isProfileUpdateFailed">
+            Profile update failed!<br />{{ errorMessage }}
+        </div>
+    </form>
+    <div class="alert alert-success" *ngIf="isSuccessful">
+      Profile updated successfully!
+    </div>
+  </div>
